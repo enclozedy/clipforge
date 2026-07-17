@@ -1,0 +1,13 @@
+node_modules/
+__pycache__/
+*.pyc
+workspace/
+*.env
+.DS_Store
+dist/
+ clips/
+downloads/
+thumbnails/
+*.wav
+*.mp4
+*.mp3
