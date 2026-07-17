@@ -1,0 +1,21 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8100:8100"
+    volumes:
+      - clipforge-data:/app/workspace
+    environment:
+      - CLIPFORGE_WHISPER_MODEL=base
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  clipforge-data:
