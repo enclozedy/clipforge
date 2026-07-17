@@ -1,60 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: #111130; }
-::-webkit-scrollbar-thumb { background: #3a3a5c; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #4a4a6c; }
-
-/* Animations */
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 70, 239, 0.4); }
-  50% { box-shadow: 0 0 0 8px rgba(217, 70, 239, 0); }
+:root {
+  --paper: #fafaf9;
+  --ink: #0a0a0a;
+  --gray-1: #e5e5e4;
+  --gray-2: #d4d4d3;
+  --gray-3: #a3a3a2;
+  --gray-4: #737372;
+  --gray-5: #525251;
+  --accent: #0a0a0a;
 }
-.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
 
-@keyframes slide-up {
-  from { opacity: 0; transform: translateY(12px); }
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  font-feature-settings: 'ss01', 'ss02', 'cv01', 'cv02';
+  letter-spacing: -0.011em;
+}
+
+/* Paper texture */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 1px 1px, rgba(0,0,0,0.015) 1px, transparent 0);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Subtle halftone */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at top, rgba(0,0,0,0.02), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#root { position: relative; z-index: 1; }
+
+/* Scrollbar — minimal */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-2); border-radius: 0; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-3); }
+
+/* Selection */
+::selection { background: var(--ink); color: var(--paper); }
+
+/* Editorial serif */
+.serif { font-family: 'Instrument Serif', Georgia, serif; font-style: italic; letter-spacing: -0.02em; }
+
+/* Mono */
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* Animations — minimal, purposeful */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
-.animate-slide-up { animation: slide-up 0.3s ease-out; }
+.fade-in { animation: fade-in 0.6s ease; }
+.rise { animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.rise-1 { animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
+.rise-2 { animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+.rise-3 { animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+.rise-4 { animation: rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
 
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
 }
 .shimmer {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0,0,0,0.04), transparent);
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
+  animation: shimmer 2s infinite;
 }
 
-/* Range slider */
+/* Thin line */
+.hr-thin { border-top: 1px solid var(--gray-1); }
+
+/* Dot */
+.dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gray-3); display: inline-block; }
+
+/* Range slider — minimal */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
-  height: 6px;
-  background: #1a1a3e;
-  border-radius: 3px;
+  height: 1px;
+  background: var(--gray-2);
   outline: none;
 }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none;
-  width: 18px;
-  height: 18px;
-  background: #d946ef;
+  width: 12px;
+  height: 12px;
+  background: var(--ink);
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid #0a0a1a;
 }
 input[type="range"]::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  background: #d946ef;
+  width: 12px;
+  height: 12px;
+  background: var(--ink);
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid #0a0a1a;
+  border: none;
 }
