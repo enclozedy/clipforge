@@ -411,6 +411,25 @@ async def generate_tweet(req: GenerateTweetRequest):
     return {"tweet": tweet[:280], "chars": len(tweet[:280])}
 
 
+# ─── Serve built frontend (production) ─────────────────
+
+_frontend_dist = Path(__file__).parent.parent / "frontend" / "dist"
+
+if _frontend_dist.exists():
+    from fastapi.staticfiles import StaticFiles as _StaticFiles
+    
+    # Serve static assets
+    app.mount("/assets", _StaticFiles(directory=str(_frontend_dist / "assets")), name="assets")
+    
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        """Serve React SPA — fallback to index.html for client routing."""
+        file_path = _frontend_dist / full_path
+        if file_path.exists() and file_path.is_file():
+            return FileResponse(str(file_path))
+        return FileResponse(str(_frontend_dist / "index.html"))
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host=settings.host, port=settings.port)
