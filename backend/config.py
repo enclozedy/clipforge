@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     thumbnails_dir: Path = Path(__file__).parent / "workspace" / "thumbnails"
 
     # Whisper
-    whisper_model: str = "base"  # tiny, base, small, medium, large
+    whisper_model: str = "tiny"  # tiny, base, small, medium, large
     whisper_language: str = "en"
 
     # yt-dlp
@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     # Server
     host: str = "0.0.0.0"
     port: int = 8100
+    base_url: str = ""  # For reverse proxy, e.g. https://clip.visionsec.tech"
     cors_origins: list[str] = ["*"]
 
     # ffmpeg
